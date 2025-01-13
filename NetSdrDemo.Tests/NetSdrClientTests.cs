@@ -1,14 +1,14 @@
-using Moq;
+п»їusing Moq;
 
 namespace NetSdrDemo.Tests
 {
     /// <summary>
-    /// Unit-тести
+    /// Unit-С‚РµСЃС‚Рё
     /// </summary>
     public class NetSdrClientTests
     {
         /// <summary>
-        /// Підключення до NetSdrClient
+        /// РџС–РґРєР»СЋС‡РµРЅРЅСЏ РґРѕ NetSdrClient
         /// </summary>
         /// <returns></returns>
         [Fact]
@@ -24,7 +24,7 @@ namespace NetSdrDemo.Tests
         }
 
         /// <summary>
-        /// Відключення від NetSdrClient
+        /// Р’С–РґРєР»СЋС‡РµРЅРЅСЏ РІС–Рґ NetSdrClient
         /// </summary>
         /// <returns></returns>
         [Fact]
@@ -37,7 +37,7 @@ namespace NetSdrDemo.Tests
         }
 
         /// <summary>
-        /// запуск/зупинка передачі IQ
+        /// Р·Р°РїСѓСЃРє/Р·СѓРїРёРЅРєР° РїРµСЂРµРґР°С‡С– IQ
         /// </summary>
         /// <returns></returns>
         [Fact]
@@ -50,7 +50,7 @@ namespace NetSdrDemo.Tests
         }
 
         /// <summary>
-        /// Команда [4.2.3] Receiver Frequency (зміна частоти)
+        /// РљРѕРјР°РЅРґР° [4.2.3] Receiver Frequency (Р·РјС–РЅР° С‡Р°СЃС‚РѕС‚Рё)
         /// </summary>
         /// <returns></returns>
         [Fact]
@@ -63,7 +63,7 @@ namespace NetSdrDemo.Tests
         }
 
         /// <summary>
-        /// Мок тест
+        /// РњРѕРє С‚РµСЃС‚
         /// </summary>
         /// <returns></returns>
         [Fact]
@@ -71,20 +71,20 @@ namespace NetSdrDemo.Tests
         {
             var mock = new Mock<INetSdrClient>();
 
-            // налаштування мок, щоб IsConnected завжди повертав true
+            // РЅР°Р»Р°С€С‚СѓРІР°РЅРЅСЏ РјРѕРє, С‰РѕР± IsConnected Р·Р°РІР¶РґРё РїРѕРІРµСЂС‚Р°РІ true
             mock.SetupGet(m => m.IsConnected).Returns(true);
 
-            // налаштування мок для SetReceiverFrequencyAsync
+            // РЅР°Р»Р°С€С‚СѓРІР°РЅРЅСЏ РјРѕРє РґР»СЏ SetReceiverFrequencyAsync
             mock.Setup(m => m.SetReceiverFrequencyAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
-            // отримуємо fake клієнта
+            // РѕС‚СЂРёРјСѓС”РјРѕ fake РєР»С–С”РЅС‚Р°
             var client = mock.Object;
 
-            // вставновлюємо частоту на мок інтерфейсі
+            // РІСЃС‚Р°РІРЅРѕРІР»СЋС”РјРѕ С‡Р°СЃС‚РѕС‚Сѓ РЅР° РјРѕРє С–РЅС‚РµСЂС„РµР№СЃС–
             await client.SetReceiverFrequencyAsync(100000000);
 
-            // перевіряємо, чи метод SetReceiverFrequencyAsync виконався 1 раз із вказаною частотою і будь яким CancellationToken
+            // РїРµСЂРµРІС–СЂСЏС”РјРѕ, С‡Рё РјРµС‚РѕРґ SetReceiverFrequencyAsync РІРёРєРѕРЅР°РІСЃСЏ 1 СЂР°Р· С–Р· РІРєР°Р·Р°РЅРѕСЋ С‡Р°СЃС‚РѕС‚РѕСЋ С– Р±СѓРґСЊ СЏРєРёРј CancellationToken
             mock.Verify(m => m.SetReceiverFrequencyAsync(100000000, It.IsAny<CancellationToken>()), Times.Once);
         }
     }
